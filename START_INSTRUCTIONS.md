@@ -1,19 +1,37 @@
 # Ako spustiť FinanceAI lokálne
 
-## Rychlý štart (s Dockerom)
+## ✅ Rýchly štart (Lokálna PostgreSQL)
 
-### 1. Spusti databázu
+### 1. Nainštaluj a spusti PostgreSQL
 ```bash
-docker compose up -d
+# Ubuntu/WSL2
+sudo apt update && sudo apt install postgresql postgresql-contrib -y
+sudo service postgresql start
+
+# macOS
+brew install postgresql
+brew services start postgresql
 ```
 
-### 2. Backend setup
+### 2. Vytvor databázu
+```bash
+sudo -u postgres psql <<EOF
+CREATE DATABASE finance_ai;
+CREATE USER finance_ai_user WITH PASSWORD 'finance_ai_pass';
+ALTER USER finance_ai_user CREATEDB;
+GRANT ALL PRIVILEGES ON DATABASE finance_ai TO finance_ai_user;
+ALTER DATABASE finance_ai OWNER TO finance_ai_user;
+\q
+EOF
+```
+
+### 3. Backend setup
 ```bash
 cd backend
 npm install
-npx prisma generate
-npx prisma migrate dev --name init
-npx prisma db seed
+npx prisma generate --schema=./src/prisma/schema.prisma
+npx prisma db push --schema=./src/prisma/schema.prisma
+npx tsx src/prisma/seed.ts
 ```
 
 ### 3. Frontend setup

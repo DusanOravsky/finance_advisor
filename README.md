@@ -92,7 +92,7 @@ AI-powered osobný finančný poradca pre slovenský trh s integráciou tradičn
 
 ### Prerequisites
 - Node.js 20+
-- PostgreSQL 15
+- PostgreSQL (lokálna inštalácia)
 - Git
 
 ### 1. Klonovanie repozitára
@@ -102,28 +102,40 @@ git clone https://github.com/DusanOravsky/finance_advisor.git
 cd finance_advisor
 ```
 
-### 2. Backend setup
+### 2. Databáza setup
+
+```bash
+# Nainštaluj PostgreSQL (ak nie je)
+sudo apt update && sudo apt install postgresql postgresql-contrib -y
+sudo service postgresql start
+
+# Vytvor databázu a usera
+sudo -u postgres psql <<EOF
+CREATE DATABASE finance_ai;
+CREATE USER finance_ai_user WITH PASSWORD 'finance_ai_pass';
+ALTER USER finance_ai_user CREATEDB;
+GRANT ALL PRIVILEGES ON DATABASE finance_ai TO finance_ai_user;
+ALTER DATABASE finance_ai OWNER TO finance_ai_user;
+\q
+EOF
+```
+
+### 3. Backend setup
 
 ```bash
 cd backend
 npm install
-cp .env.example .env
+
+# Backend .env je už nakonfigurovaný pre lokálnu PostgreSQL
+# Skontroluj backend/.env:
+# DATABASE_URL="postgresql://finance_ai_user:finance_ai_pass@localhost:5432/finance_ai"
 ```
 
-Edituj `.env` a nastav:
-- `DATABASE_URL` - PostgreSQL connection string
-- `ANTHROPIC_API_KEY` - Claude API key
-- `JWT_SECRET` - random string (min 32 chars)
-- `JWT_REFRESH_SECRET` - random string (min 32 chars)
-
-### 3. Databáza setup
-
+**Vytvor DB schému a seed data:**
 ```bash
-# Spusti PostgreSQL (lokálne alebo Docker)
-# Potom spusti Prisma migrations
-npx prisma generate
-npx prisma migrate dev
-npx prisma db seed
+npx prisma generate --schema=./src/prisma/schema.prisma
+npx prisma db push --schema=./src/prisma/schema.prisma
+npx tsx src/prisma/seed.ts
 ```
 
 ### 4. Frontend setup
@@ -131,7 +143,7 @@ npx prisma db seed
 ```bash
 cd ../frontend
 npm install
-cp .env.example .env
+# Frontend .env je už nakonfigurovaný
 ```
 
 ### 5. Spustenie aplikácie
@@ -160,6 +172,14 @@ Pre rýchly prístup použi demo prihlasovacie údaje:
 Email: dusan.oravsky@gmail.com
 Heslo: password123
 ```
+
+**Demo portfólio obsahuje:**
+- €847,230 celková hodnota
+- 10 investícií (stocks, ETFs, bonds, crypto)
+- 4 poistky (auto, dom, zdravie, život)
+- 4 finančné ciele
+- 7 transakcií
+- Kompletný user profil
 
 ## 📁 Štruktúra projektu
 
