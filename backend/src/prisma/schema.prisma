@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String            @id @default(uuid())
+  email             String            @unique
+  password          String
+  name              String
+  currency          String            @default("EUR")
+  riskTolerance     String            @default("moderate")
+  timeHorizon       String            @default("10-15 years")
+  monthlyIncome     Float             @default(0)
+  monthlyExpenses   Float             @default(0)
+  savingsGoal       Float             @default(0)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  // Relations
+  insurances        Insurance[]
+  investments       Investment[]
+  transactions      Transaction[]
+  goals             FinancialGoal[]
+  notifications     Notification[]
+  settings          UserSettings?
+  cryptoWallet      CryptoWallet?
+  chatHistory       ChatMessage[]
+  uploadedFiles     UploadedFile[]
+}
+
+model UserSettings {
+  id                          String   @id @default(uuid())
+  userId                      String   @unique
+  notifyInsuranceRenewal      Boolean  @default(true)
+  notifyInvestmentAlerts      Boolean  @default(true)
+  notifyBudgetAlerts          Boolean  @default(false)
+  notifyMonthlyReports        Boolean  @default(true)
+  notifyCryptoAlerts          Boolean  @default(true)
+  twoFactorEnabled            Boolean  @default(false)
+  theme                       String   @default("light")
+  language                    String   @default("sk")
+  user                        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Insurance {
+  id           String   @id @default(uuid())
+  userId       String
+  type         String
+  provider     String
+  premium      Float
+  renewalDate  DateTime
+  status       String
+  coverage     String
+  policyNumber String
+  documents    String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Investment {
+  id            String   @id @default(uuid())
+  userId        String
+  symbol        String
+  name          String
+  type          String
+  shares        Float
+  purchasePrice Float
+  currentPrice  Float
+  platform      String?
+  chainId       Int?
+  contractAddress String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  userId      String
+  date        DateTime
+  description String
+  amount      Float
+  type        String
+  category    String
+  accountId   String?
+  txHash      String?
+  chainId     Int?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+model FinancialGoal {
+  id            String   @id @default(uuid())
+  userId        String
+  name          String
+  targetAmount  Float
+  currentAmount Float
+  deadline      DateTime
+  priority      String
+  category      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  type      String
+  title     String
+  message   String
+  urgent    Boolean  @default(false)
+  read      Boolean  @default(false)
+  actionUrl String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read, createdAt])
+}
+
+model CryptoWallet {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  address       String   @unique
+  chainId       Int      @default(1)
+  provider      String
+  connected     Boolean  @default(false)
+  ethBalance    Float    @default(0)
+  lastSynced    DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  userId    String
+  role      String
+  content   String   @db.Text
+  metadata  Json?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+model UploadedFile {
+  id        String   @id @default(uuid())
+  userId    String
+  filename  String
+  fileType  String
+  fileUrl   String
+  fileSize  Int
+  processed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: finance-ai-db
+    environment:
+      POSTGRES_DB: finance_ai
+      POSTGRES_USER: finance_ai_user
+      POSTGRES_PASSWORD: finance_ai_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U finance_ai_user -d finance_ai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - finance-ai-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: finance-ai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - finance-ai-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  finance-ai-network:
+    driver: bridge
