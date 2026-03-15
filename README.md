@@ -2,7 +2,7 @@
 
 AI-powered osobný finančný poradca pre slovenský trh s integráciou tradičných financií a crypto portfólia.
 
-## ✨ Features (Phases 1-4 Completed)
+## ✨ Features (Phases 1-7 Completed)
 
 ✅ **Authentication & User Management**
 - JWT tokens (access + refresh)
@@ -24,10 +24,30 @@ AI-powered osobný finančný poradca pre slovenský trh s integráciou tradičn
 - Chat history persistence
 - Quick action buttons
 
+✅ **Market Data & Real Prices**
+- CoinGecko API (crypto prices)
+- Alpha Vantage API (stock prices)
+- Redis caching layer
+- DeFi APY rates
+- Bulk portfolio price updates
+
+✅ **Insurance Management**
+- Full CRUD operations
+- Renewal alerts (30/60/90 days)
+- Slovak insurers comparison
+- Insurance statistics
+
+✅ **Data Import/Export**
+- CSV import/export
+- JSON import/export
+- Sample templates
+- File upload handling
+
 ✅ **Demo Data**
 - Pre-seeded demo account
 - Real-world portfolio example
 - Sample transactions & goals
+- Insurance policies
 
 ## 🛠 Tech Stack
 
@@ -167,6 +187,30 @@ finance_advisor/
 - `GET /api/ai/chat/history` - História chatu
 - `DELETE /api/ai/chat/history` - Vymazať históriu
 
+### Market Data
+- `GET /api/market/crypto/:symbol` - Crypto cena
+- `GET /api/market/stock/:symbol` - Stock cena
+- `GET /api/market/defi/rates` - DeFi APY rates
+- `POST /api/market/portfolio/update-prices` - Bulk price update
+
+### Insurance
+- `GET /api/insurance` - Zoznam poistiek
+- `GET /api/insurance/:id` - Detail poistky
+- `POST /api/insurance` - Pridať poistku
+- `PUT /api/insurance/:id` - Aktualizovať poistku
+- `DELETE /api/insurance/:id` - Zmazať poistku
+- `GET /api/insurance/renewals` - Nadchádzajúce obnovenia
+- `GET /api/insurance/compare/:type` - Porovnanie poisťovní
+- `GET /api/insurance/stats` - Štatistiky
+
+### Import/Export
+- `POST /api/import-export/csv` - Import z CSV
+- `POST /api/import-export/json` - Import z JSON
+- `GET /api/import-export/csv` - Export do CSV
+- `GET /api/import-export/json` - Export do JSON
+- `GET /api/import-export/template/csv` - Sample CSV
+- `GET /api/import-export/template/json` - Sample JSON
+
 ## 🔧 Development
 
 ```bash
@@ -192,9 +236,9 @@ npm run format
 - ✅ **Phase 2:** Auth & User Management (JWT, bcrypt, protected routes)
 - ✅ **Phase 3:** Dashboard & Portfolio (CRUD APIs, seed data)
 - ✅ **Phase 4:** AI Chat Interface (Claude API, chat history)
-- 🔲 **Phase 5:** Market Data & Real Prices (CoinGecko, Alpha Vantage)
-- 🔲 **Phase 6:** Insurance Management (SK insurers)
-- 🔲 **Phase 7:** Data Import/Export (CSV, JSON, PDF)
+- ✅ **Phase 5:** Market Data & Real Prices (CoinGecko, Alpha Vantage, Redis cache)
+- ✅ **Phase 6:** Insurance Management (SK insurers, renewals, comparison)
+- ✅ **Phase 7:** Data Import/Export (CSV, JSON, templates)
 - 🔲 **Phase 8:** Notifications & Reports
 - 🔲 **Phase 9:** Polish & Settings (dark mode, i18n)
 - 🔲 **Phase 10:** Testing & Deployment
@@ -207,9 +251,12 @@ Detailný plán: `CLAUDE.md`
 ### Backend (.env)
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/finance_ai"
+REDIS_URL="redis://localhost:6379"
 JWT_SECRET="your-super-secret-jwt-key"
 JWT_REFRESH_SECRET="your-refresh-token-secret"
 ANTHROPIC_API_KEY="sk-ant-api03-your-key"
+ALPHA_VANTAGE_API_KEY="your-alpha-vantage-key"
+COINGECKO_API_KEY="your-coingecko-key"
 FRONTEND_URL="http://localhost:5173"
 PORT=3000
 NODE_ENV="development"
