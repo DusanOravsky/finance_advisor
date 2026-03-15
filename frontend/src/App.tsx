@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAuthStore } from './store/authStore';
 import { authService } from './services/auth.service';
+import { useTheme } from './hooks/useTheme';
 
 // Pages
 import Login from './pages/Login';
@@ -12,6 +13,7 @@ import Portfolio from './pages/Portfolio';
 import Chat from './pages/Chat';
 import Insurance from './pages/Insurance';
 import Settings from './pages/Settings';
+import Reports from './pages/Reports';
 
 // Layout
 import MainLayout from './components/layout/MainLayout';
@@ -38,6 +40,12 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 function App() {
   const { setUser, setLoading } = useAuthStore();
+  const { theme, setTheme } = useTheme();
+
+  // Inicializuj theme
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
 
   // Načítaj profil pri štarte ak existuje token
   useEffect(() => {
@@ -78,6 +86,7 @@ function App() {
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/insurance" element={<Insurance />} />
+            <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
 

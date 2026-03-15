@@ -11,6 +11,8 @@ import aiRoutes from './routes/aiRoutes';
 import marketRoutes from './routes/marketRoutes';
 import insuranceRoutes from './routes/insuranceRoutes';
 import importExportRoutes from './routes/importExportRoutes';
+import notificationRoutes from './routes/notificationRoutes';
+import reportRoutes from './routes/reportRoutes';
 
 const app: Express = express();
 
@@ -46,6 +48,8 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/market', marketRoutes);
 app.use('/api/insurance', insuranceRoutes);
 app.use('/api/import-export', importExportRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/reports', reportRoutes);
 
 // Error handling
 app.use(notFoundHandler);
