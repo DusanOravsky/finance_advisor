@@ -4,6 +4,10 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { errorHandler } from './middleware/errorHandler';
 import { notFoundHandler } from './middleware/notFoundHandler';
+import authRoutes from './routes/authRoutes';
+import portfolioRoutes from './routes/portfolioRoutes';
+import dashboardRoutes from './routes/dashboardRoutes';
+import aiRoutes from './routes/aiRoutes';
 
 const app: Express = express();
 
@@ -31,10 +35,11 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// API routes budú pridané neskôr
-// app.use('/api/auth', authRoutes);
-// app.use('/api/user', userRoutes);
-// atď...
+// API routes
+app.use('/api/auth', authRoutes);
+app.use('/api/portfolio', portfolioRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Error handling
 app.use(notFoundHandler);

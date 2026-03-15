@@ -61,44 +61,44 @@ finance_advisor/
 
 ## Implementacny plan
 
-### PHASE 1: Foundation (Tyzden 1)
-- [ ] Monorepo setup (frontend/ + backend/)
-- [ ] Docker Compose (PostgreSQL + Redis)
-- [ ] Backend: Express + TypeScript + Prisma (core modely: User, UserSettings)
-- [ ] Frontend: Vite + React + TypeScript + Tailwind
-- [ ] ESLint + Prettier config
-- [ ] Basic project structure (routes, middleware, services)
+### PHASE 1: Foundation (Tyzden 1) ✅ DOKONCENE
+- [x] Monorepo setup (frontend/ + backend/)
+- [x] Docker Compose (PostgreSQL + Redis)
+- [x] Backend: Express + TypeScript + Prisma (core modely: User, UserSettings)
+- [x] Frontend: Vite + React + TypeScript + Tailwind
+- [x] ESLint + Prettier config
+- [x] Basic project structure (routes, middleware, services)
 
-### PHASE 2: Auth & User Management (Tyzden 2)
-- [ ] JWT auth (register, login, refresh, logout)
-- [ ] Password hashing (bcrypt)
-- [ ] Auth middleware
-- [ ] Rate limiting
-- [ ] Frontend: Login/Register pages
-- [ ] Auth context + protected routes
-- [ ] User profile page (basic)
+### PHASE 2: Auth & User Management (Tyzden 2) ✅ DOKONCENE
+- [x] JWT auth (register, login, refresh, logout)
+- [x] Password hashing (bcrypt)
+- [x] Auth middleware
+- [x] Rate limiting
+- [x] Frontend: Login/Register pages
+- [x] Auth context + protected routes
+- [x] User profile page (basic)
 
-### PHASE 3: Dashboard & Portfolio (Tyzdne 3-4)
-- [ ] DB: Investment, Transaction, FinancialGoal modely
-- [ ] Portfolio CRUD API
-- [ ] Transaction CRUD API + CSV import
-- [ ] Financial Goals CRUD API
-- [ ] Dashboard Overview API (agregacie)
-- [ ] Frontend: Dashboard s StatCards
-- [ ] Frontend: Portfolio pie chart (Recharts)
-- [ ] Frontend: Recent transactions list
-- [ ] Frontend: Financial goals s progress bars
-- [ ] Mock data seeding (Dusanov profil)
+### PHASE 3: Dashboard & Portfolio (Tyzdne 3-4) ✅ DOKONCENE
+- [x] DB: Investment, Transaction, FinancialGoal modely
+- [x] Portfolio CRUD API
+- [x] Transaction CRUD API + CSV import
+- [x] Financial Goals CRUD API
+- [x] Dashboard Overview API (agregacie)
+- [x] Frontend: Dashboard s StatCards
+- [x] Frontend: Portfolio pie chart (Recharts)
+- [x] Frontend: Recent transactions list
+- [x] Frontend: Financial goals s progress bars
+- [x] Mock data seeding (Dusanov profil)
 
-### PHASE 4: AI Chat Interface (Tyzdne 5-6)
-- [ ] Claude API integracia (Anthropic SDK)
-- [ ] ChatMessage model + API
-- [ ] System prompt s portfolio kontextom (RAG-lite)
-- [ ] Chat history persistence
-- [ ] Frontend: Chat UI (MessageBubble, ChatInput)
-- [ ] Quick action buttons
-- [ ] Portfolio-aware responses
-- [ ] Streaming responses (SSE)
+### PHASE 4: AI Chat Interface (Tyzdne 5-6) ✅ DOKONCENE
+- [x] Claude API integracia (Anthropic SDK)
+- [x] ChatMessage model + API
+- [x] System prompt s portfolio kontextom (RAG-lite)
+- [x] Chat history persistence
+- [x] Frontend: Chat UI (MessageBubble, ChatInput)
+- [x] Quick action buttons
+- [x] Portfolio-aware responses
+- [ ] Streaming responses (SSE) - optional pre neskor
 
 ### PHASE 5: Market Data & Real Prices (Tyzden 7)
 - [ ] CoinGecko integracia (crypto ceny - free API)

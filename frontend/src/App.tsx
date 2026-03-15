@@ -1,5 +1,18 @@
-import { BrowserRouter } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useAuthStore } from './store/authStore';
+import { authService } from './services/auth.service';
+
+// Pages
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import Portfolio from './pages/Portfolio';
+import Chat from './pages/Chat';
+
+// Layout
+import MainLayout from './components/layout/MainLayout';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -10,25 +23,64 @@ const queryClient = new QueryClient({
   },
 });
 
+// Protected Route wrapper
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
+}
+
 function App() {
+  const { setUser, setLoading } = useAuthStore();
+
+  // Načítaj profil pri štarte ak existuje token
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (authService.isAuthenticated()) {
+        try {
+          const profile = await authService.getProfile();
+          setUser(profile);
+        } catch (error) {
+          console.error('Failed to load profile:', error);
+          setUser(null);
+        }
+      } else {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, [setUser, setLoading]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className="min-h-screen bg-gray-50">
-          <div className="flex items-center justify-center min-h-screen">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-primary-600 mb-4">
-                FinanceAI
-              </h1>
-              <p className="text-gray-600 text-lg">
-                AI-powered finančný poradca pre slovenský trh
-              </p>
-              <div className="mt-8 text-sm text-gray-500">
-                Phase 1: Foundation ✅
-              </div>
-            </div>
-          </div>
-        </div>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Protected routes */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/chat" element={<Chat />} />
+          </Route>
+
+          {/* Redirect */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
       </BrowserRouter>
     </QueryClientProvider>
   );
