@@ -8,6 +8,9 @@ import authRoutes from './routes/authRoutes';
 import portfolioRoutes from './routes/portfolioRoutes';
 import dashboardRoutes from './routes/dashboardRoutes';
 import aiRoutes from './routes/aiRoutes';
+import marketRoutes from './routes/marketRoutes';
+import insuranceRoutes from './routes/insuranceRoutes';
+import importExportRoutes from './routes/importExportRoutes';
 
 const app: Express = express();
 
@@ -40,6 +43,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/market', marketRoutes);
+app.use('/api/insurance', insuranceRoutes);
+app.use('/api/import-export', importExportRoutes);
 
 // Error handling
 app.use(notFoundHandler);

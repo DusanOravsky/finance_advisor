@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, TrendingUp, MessageSquare, LogOut } from 'lucide-react';
+import { LayoutDashboard, TrendingUp, MessageSquare, Shield, Settings as SettingsIcon, LogOut } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { authService } from '../../services/auth.service';
 
@@ -31,9 +31,17 @@ export default function MainLayout() {
               <TrendingUp size={20} />
               <span>Portfólio</span>
             </Link>
+            <Link to="/insurance" className="flex items-center gap-2 text-gray-700 hover:text-primary-600">
+              <Shield size={20} />
+              <span>Poistenie</span>
+            </Link>
             <Link to="/chat" className="flex items-center gap-2 text-gray-700 hover:text-primary-600">
               <MessageSquare size={20} />
               <span>AI Chat</span>
+            </Link>
+            <Link to="/settings" className="flex items-center gap-2 text-gray-700 hover:text-primary-600">
+              <SettingsIcon size={20} />
+              <span>Nastavenia</span>
             </Link>
           </nav>
 

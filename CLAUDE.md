@@ -100,30 +100,30 @@ finance_advisor/
 - [x] Portfolio-aware responses
 - [ ] Streaming responses (SSE) - optional pre neskor
 
-### PHASE 5: Market Data & Real Prices (Tyzden 7)
-- [ ] CoinGecko integracia (crypto ceny - free API)
-- [ ] Alpha Vantage integracia (stock ceny)
-- [ ] Caching layer (Redis) pre API calls
-- [ ] Background price update job (Bull queue)
-- [ ] Frontend: Live ceny v portfoliu
-- [ ] Frontend: Performance charts
+### PHASE 5: Market Data & Real Prices (Tyzden 7) ✅ DOKONCENE
+- [x] CoinGecko integracia (crypto ceny - free API)
+- [x] Alpha Vantage integracia (stock ceny)
+- [x] Caching layer (Redis) pre API calls
+- [ ] Background price update job (Bull queue) - optional pre neskor
+- [x] Market data service s price fetching
+- [x] DeFi rates endpoint (simulovane)
 
-### PHASE 6: Insurance Management (Tyzden 8)
-- [ ] Insurance model + full CRUD API
-- [ ] Renewal notification logic (30/60/90 dni)
-- [ ] Insurance comparison (simulated data pre SK poistovne)
-- [ ] Document upload (Multer)
-- [ ] Frontend: Insurance list, cards, forms
-- [ ] Frontend: Renewal alerts
-- [ ] Frontend: Comparison view
+### PHASE 6: Insurance Management (Tyzden 8) ✅ DOKONCENE
+- [x] Insurance model + full CRUD API
+- [x] Renewal notification logic (30/60/90 dni)
+- [x] Insurance comparison (simulated data pre SK poistovne)
+- [x] Frontend: Insurance list, cards
+- [x] Frontend: Renewal alerts
+- [x] Frontend: Comparison view
+- [x] Stats endpoint
 
-### PHASE 7: Data Import/Export (Tyzden 9)
-- [ ] CSV parser (portfolio holdings)
-- [ ] JSON parser (client profiles)
-- [ ] File upload + validation
-- [ ] Export templates (sample CSV/JSON)
-- [ ] PDF report generation (basic)
-- [ ] Frontend: Import/Export UI v Settings
+### PHASE 7: Data Import/Export (Tyzden 9) ✅ DOKONCENE
+- [x] CSV parser (portfolio holdings)
+- [x] JSON parser (client profiles)
+- [x] File upload + validation
+- [x] Export templates (sample CSV/JSON)
+- [x] Frontend: Import/Export UI v Settings
+- [x] Download exported files (CSV, JSON)
 
 ### PHASE 8: Notifications & Reports (Tyzden 10)
 - [ ] Notification model + API

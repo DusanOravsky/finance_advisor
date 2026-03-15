@@ -10,6 +10,8 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import Chat from './pages/Chat';
+import Insurance from './pages/Insurance';
+import Settings from './pages/Settings';
 
 // Layout
 import MainLayout from './components/layout/MainLayout';
@@ -75,6 +77,8 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/insurance" element={<Insurance />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
 
           {/* Redirect */}
