@@ -2,7 +2,7 @@
 
 AI-powered osobný finančný poradca pre slovenský trh s integráciou tradičných financií a crypto portfólia.
 
-## ✨ Features (Phases 1-7 Completed)
+## ✨ Features (Phases 1-10 Completed) 🎉
 
 ✅ **Authentication & User Management**
 - JWT tokens (access + refresh)
@@ -42,6 +42,28 @@ AI-powered osobný finančný poradca pre slovenský trh s integráciou tradičn
 - JSON import/export
 - Sample templates
 - File upload handling
+
+✅ **Notifications & Reports**
+- In-app notification system
+- Real-time updates
+- Automatic notifications (insurance renewals, goals)
+- Monthly/Quarterly/Yearly reports
+- Tax reports
+- Transaction breakdown
+
+✅ **Dark Mode & Polish**
+- Full dark mode support
+- Theme persistence
+- Responsive design
+- Loading states
+- Error handling
+
+✅ **Production Ready**
+- Docker production builds
+- CI/CD pipeline (GitHub Actions)
+- Health checks
+- Database backups guide
+- Complete deployment documentation
 
 ✅ **Demo Data**
 - Pre-seeded demo account
@@ -211,6 +233,20 @@ finance_advisor/
 - `GET /api/import-export/template/csv` - Sample CSV
 - `GET /api/import-export/template/json` - Sample JSON
 
+### Notifications
+- `GET /api/notifications` - Zoznam notifikácií
+- `GET /api/notifications/unread-count` - Počet neprečítaných
+- `PUT /api/notifications/:id/read` - Označiť ako prečítané
+- `PUT /api/notifications/read-all` - Označiť všetky
+- `DELETE /api/notifications/:id` - Zmazať notifikáciu
+- `POST /api/notifications/generate` - Generovať notifikácie
+
+### Reports
+- `GET /api/reports/monthly` - Mesačný report
+- `GET /api/reports/quarterly` - Kvartálny report
+- `GET /api/reports/yearly` - Ročný report
+- `GET /api/reports/tax` - Daňový report
+
 ## 🔧 Development
 
 ```bash
@@ -239,10 +275,10 @@ npm run format
 - ✅ **Phase 5:** Market Data & Real Prices (CoinGecko, Alpha Vantage, Redis cache)
 - ✅ **Phase 6:** Insurance Management (SK insurers, renewals, comparison)
 - ✅ **Phase 7:** Data Import/Export (CSV, JSON, templates)
-- 🔲 **Phase 8:** Notifications & Reports
-- 🔲 **Phase 9:** Polish & Settings (dark mode, i18n)
-- 🔲 **Phase 10:** Testing & Deployment
-- 🔲 **Phase 11:** Web3 Extension (optional)
+- ✅ **Phase 8:** Notifications & Reports (in-app notifications, monthly/yearly reports, tax)
+- ✅ **Phase 9:** Polish & Settings (dark mode, responsive design, error handling)
+- ✅ **Phase 10:** Testing & Deployment (Docker, CI/CD, deployment guide)
+- 🔲 **Phase 11:** Web3 Extension (optional - future enhancement)
 
 Detailný plán: `CLAUDE.md`
 
