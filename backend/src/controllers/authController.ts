@@ -102,6 +102,23 @@ export class AuthController {
     }
   }
 
+  async updateSettings(req: AuthRequest, res: Response) {
+    try {
+      const userId = req.user!.id;
+      const settings = await authService.updateSettings(userId, req.body);
+
+      res.json({
+        status: 'success',
+        data: settings,
+      });
+    } catch (error: any) {
+      res.status(400).json({
+        status: 'error',
+        message: error.message || 'Chyba pri aktualizácii nastavení',
+      });
+    }
+  }
+
   async logout(req: Request, res: Response) {
     // V production by sa tu invalidoval refresh token v Redis
     res.json({

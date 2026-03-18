@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './store/authStore';
 import { authService } from './services/auth.service';
 import { useTheme } from './hooks/useTheme';
@@ -69,6 +70,28 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: theme === 'dark' ? '#1f2937' : '#fff',
+              color: theme === 'dark' ? '#fff' : '#1f2937',
+            },
+            success: {
+              iconTheme: {
+                primary: '#10b981',
+                secondary: '#fff',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
         <Routes>
           {/* Public routes */}
           <Route path="/login" element={<Login />} />

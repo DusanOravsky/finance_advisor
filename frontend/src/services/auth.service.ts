@@ -44,6 +44,11 @@ export const authService = {
     return response.data.data;
   },
 
+  async updateSettings(data: any) {
+    const response = await api.put('/auth/settings', data);
+    return response.data.data;
+  },
+
   isAuthenticated(): boolean {
     return !!localStorage.getItem('accessToken');
   },

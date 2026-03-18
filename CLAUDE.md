@@ -59,10 +59,11 @@ finance_advisor/
 - Monorepo (frontend/ + backend/ v jednom repo)
 - Seed data - Dusanov profil ako demo ucet
 
-## ✅ PROJEKT KOMPLETNE FUNKČNÝ (15.3.2026)
+## ✅ PROJEKT KOMPLETNE FUNKČNÝ (18.3.2026)
 
 ### 🎯 Súhrn implementácie
 - **10 fáz dokončených** (Phases 1-10)
+- **Rozšírený Insurance modul** - editácia, AI scraping, email notifikácie
 - **Lokálne spustená aplikácia** s PostgreSQL databázou
 - **Demo účet** s kompletným portfóliom €847,230
 - **Backend + Frontend** plne funkčné
@@ -139,6 +140,63 @@ npm run dev  # Port 5173
 - ✅ 1 crypto wallet
 - ✅ Portfolio value: €847,230
 
+### 🆕 Nové funkcie - Insurance Management (18.3.2026)
+
+**1. Editovateľné poistky ✅**
+- InsuranceModal pre vytvorenie/úpravu
+- Edit button na každej poistke
+- Tlačidlo "Pridať poistku"
+
+**2. Rozšírené polia poistiek ✅**
+- `startDate` - dátum začiatku poistenia
+- `endDate` - dátum konca (voliteľný)
+- `renewalDate` - dátum obnovenia
+- `reminderDays` - koľko dní vopred poslať pripomienku (30-180)
+- `emailReminder` - zapnúť/vypnúť email pripomienky
+- `lastReminderSent` - tracking poslednej pripomienky
+
+**3. Email notifikácie ✅**
+- **EmailService** - HTML emaily s pekným dizajnom (Nodemailer)
+- **Automatický cron job** - každý deň o 9:00 kontroluje poistky
+- **Urgentné pripomienky** - ak ostáva ≤7 dní, pošle každé 3 dni
+- **Notifikačné nastavenia** - zapnutie/vypnutie v Settings
+- **Email konfigurácia** - Settings → Profil (email kam posielať)
+
+**4. AI scraping poisťovní ✅**
+- **InsuranceScrapingService** - Claude API pre analýzu trhu
+- Tlačidlo "AI Ponuky" - hľadá najlepšie ponuky na SK trhu
+- Analyzuje: Allianz, UNIQA, Generali, Kooperativa, AXA, NN, ČSOB
+- Zobrazuje: cenu, krytie, rating, zľavu, odkaz
+- **analyzeInsurance** endpoint - porovná aktuálnu vs trh, vypočíta úspory
+- Fallback na simulované dáta ak nie je ANTHROPIC_API_KEY
+
+**5. Settings rozšírené ✅**
+- 3 taby: Profil, Notifikácie, Import/Export
+- **Profil** - email, mena, riziková tolerancia, príjmy/výdavky
+- **Notifikácie** - zapnúť/vypnúť email pre poistky, investície, budget, reporty, crypto
+- **Import/Export** - CSV/JSON (bez zmien)
+
+**Nové API endpointy:**
+- `GET /api/insurance/scrape/:type?currentPremium=X` - AI najlepšie ponuky
+- `GET /api/insurance/:id/analyze` - analýza poistky vs trh
+- `POST /api/insurance/:id/send-reminder` - manuálny email reminder
+- `PUT /api/auth/settings` - aktualizácia notifikačných nastavení
+- `PUT /api/insurance/:id` - update poistky s novými poľami
+
+**Nové services:**
+- `insuranceScrapingService.ts` - AI-powered scraping SK poisťovní
+- `emailService.ts` - posielanie HTML emailov (Nodemailer)
+- `insuranceReminderService.ts` - cron job logika pre pripomienky
+
+**Nové komponenty:**
+- `InsuranceModal.tsx` - form pre vytvorenie/editovanie poistiek
+- Upgraded `Insurance.tsx` - AI ponuky, edit, email tlačidlá
+- Upgraded `Settings.tsx` - 3 taby s notifikačnými nastaveniami
+
+**Dependencies pridané:**
+- `nodemailer` + `@types/nodemailer` - email posielanie
+- `react-hot-toast` - toast notifikácie vo frontende
+
 ### 🔧 Technické poznámky
 
 **Databáza:**
@@ -146,9 +204,14 @@ npm run dev  # Port 5173
 - Connection string: `postgresql://finance_ai_user:finance_ai_pass@localhost:5432/finance_ai`
 
 **API Keys (voliteľné):**
-- `ANTHROPIC_API_KEY` - pre AI chat (zatiaľ prázdne)
+- `ANTHROPIC_API_KEY` - pre AI chat a insurance scraping (zatiaľ prázdne, používa fallback)
 - `ALPHA_VANTAGE_API_KEY` - pre stock prices (zatiaľ prázdne)
 - `COINGECKO_API_KEY` - pre crypto prices (zatiaľ prázdne)
+- `SMTP_HOST` - SMTP server pre emaily (napr. smtp.gmail.com)
+- `SMTP_PORT` - SMTP port (587)
+- `SMTP_USER` - email adresa
+- `SMTP_PASS` - email heslo/app password
+- `FRONTEND_URL` - URL frontendu pre linky v emailoch (default: http://localhost:5173)
 
 **Redis:**
 - Voliteľný (cache layer pre market data)

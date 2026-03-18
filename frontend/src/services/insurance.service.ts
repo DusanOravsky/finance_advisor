@@ -39,4 +39,20 @@ export const insuranceService = {
     const response = await api.get('/insurance/stats');
     return response.data.data;
   },
+
+  async scrapeBestOffers(type: string, userProfile: any = {}) {
+    const params = new URLSearchParams(userProfile).toString();
+    const response = await api.get(`/insurance/scrape/${type}?${params}`);
+    return response.data.data;
+  },
+
+  async analyzeInsurance(id: string) {
+    const response = await api.get(`/insurance/${id}/analyze`);
+    return response.data.data;
+  },
+
+  async sendReminderEmail(id: string) {
+    const response = await api.post(`/insurance/${id}/send-reminder`);
+    return response.data;
+  },
 };

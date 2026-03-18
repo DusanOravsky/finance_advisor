@@ -107,6 +107,19 @@ export class AuthService {
         monthlyExpenses: true,
         savingsGoal: true,
         createdAt: true,
+        settings: {
+          select: {
+            id: true,
+            notifyInsuranceRenewal: true,
+            notifyInvestmentAlerts: true,
+            notifyBudgetAlerts: true,
+            notifyMonthlyReports: true,
+            notifyCryptoAlerts: true,
+            twoFactorEnabled: true,
+            theme: true,
+            language: true,
+          },
+        },
       },
     });
 
@@ -135,5 +148,28 @@ export class AuthService {
     });
 
     return user;
+  }
+
+  async updateSettings(userId: string, settingsData: any) {
+    // Najprv zisti userId zo settings
+    const settings = await prisma.userSettings.findUnique({
+      where: { userId },
+    });
+
+    if (!settings) {
+      // Vytvor settings ak neexistujú
+      return await prisma.userSettings.create({
+        data: {
+          userId,
+          ...settingsData,
+        },
+      });
+    }
+
+    // Aktualizuj existujúce settings
+    return await prisma.userSettings.update({
+      where: { userId },
+      data: settingsData,
+    });
   }
 }

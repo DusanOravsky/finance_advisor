@@ -6,7 +6,11 @@ interface InsuranceData {
   type: string;
   provider: string;
   premium: number;
+  startDate: Date;
+  endDate?: Date;
   renewalDate: Date;
+  reminderDays?: number;
+  emailReminder?: boolean;
   status: string;
   coverage: string;
   policyNumber: string;
